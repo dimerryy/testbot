@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: telegram-flask-bot
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers=2 --timeout=30
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: BOT_TOKEN
+        sync: false     # set in Render Dashboard
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: AUTO_SET_WEBHOOK
+        value: "true"
+    healthCheckPath: /
